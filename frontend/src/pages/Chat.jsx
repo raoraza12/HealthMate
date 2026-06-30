@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,7 +37,7 @@ const Chat = () => {
     const fetchConversations = async (silent = false) => {
         if (!silent) setLoadingConversations(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/messages/conversations', axiosConfig);
+            const res = await axios.get(`${API_BASE}/api/messages/conversations`, axiosConfig);
             setConversations(res.data);
             
             // If we have a userId in URL, verify if it exists in conversations
@@ -46,7 +47,7 @@ const Chat = () => {
                     setSelectedUser(found.user);
                 } else {
                     // Not in conversations yet, fetch user details directly to start a conversation
-                    const userDetails = await axios.get(`http://localhost:5000/api/friends/list`, axiosConfig);
+                    const userDetails = await axios.get(`${API_BASE}/api/friends/list`, axiosConfig);
                     const matchingUser = userDetails.data.find(u => u._id === userId);
                         if (matchingUser) {
                             setSelectedUser({
@@ -72,7 +73,7 @@ const Chat = () => {
     const fetchMessages = async (targetUserId, silent = false) => {
         if (!silent) setLoadingMessages(true);
         try {
-            const res = await axios.get(`http://localhost:5000/api/messages/${targetUserId}`, axiosConfig);
+            const res = await axios.get(`${API_BASE}/api/messages/${targetUserId}`, axiosConfig);
             setMessages(res.data);
         } catch (err) {
             console.error('Error fetching messages:', err);
@@ -84,7 +85,7 @@ const Chat = () => {
     // Load patient reports for sharing modal
     const fetchUserReports = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/reports', axiosConfig);
+            const res = await axios.get(`${API_BASE}/api/reports`, axiosConfig);
             setUserReports(res.data);
         } catch (err) {
             console.error('Error fetching reports:', err);
@@ -124,7 +125,7 @@ const Chat = () => {
         if (!typedMessage.trim() || !selectedUser) return;
 
         try {
-            const res = await axios.post('http://localhost:5000/api/messages', {
+            const res = await axios.post(`${API_BASE}/api/messages`, {
                 receiver: selectedUser.id,
                 content: typedMessage
             }, axiosConfig);
@@ -143,7 +144,7 @@ const Chat = () => {
 
         try {
             const content = `I shared a report: ${report.reportType} (${new Date(report.uploadDate).toLocaleDateString()})`;
-            const res = await axios.post('http://localhost:5000/api/messages', {
+            const res = await axios.post(`${API_BASE}/api/messages`, {
                 receiver: selectedUser.id,
                 content: content,
                 reportRef: report._id

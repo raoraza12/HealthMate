@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -26,7 +27,7 @@ const AddVitals = () => {
             return toast.error('Kam se kam ek vital zaroor enter karein.');
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/vitals', {
+            await axios.post(`${API_BASE}/api/vitals`, {
                 bp: form.bp || undefined,
                 sugar: form.sugar ? Number(form.sugar) : undefined,
                 weight: form.weight ? Number(form.weight) : undefined,

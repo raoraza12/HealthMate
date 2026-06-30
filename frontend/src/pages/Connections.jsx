@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,8 +23,8 @@ const Connections = () => {
         setLoading(true);
         try {
             const [sugRes, friendsRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/friends/suggestions', axiosConfig),
-                axios.get('http://localhost:5000/api/friends/list', axiosConfig)
+                axios.get(`${API_BASE}/api/friends/suggestions`, axiosConfig),
+                axios.get(`${API_BASE}/api/friends/list`, axiosConfig)
             ]);
             setSuggestions(sugRes.data);
             setFriends(friendsRes.data);
@@ -41,7 +42,7 @@ const Connections = () => {
 
     const handleConnect = async (friendId, name) => {
         try {
-            await axios.post('http://localhost:5000/api/friends/connect', { friendId }, axiosConfig);
+            await axios.post(`${API_BASE}/api/friends/connect`, { friendId }, axiosConfig);
             toast.success(`Connected with ${name}! 🎉`);
             fetchData();
         } catch (err) {

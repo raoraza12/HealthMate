@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -243,16 +244,16 @@ const Dashboard = () => {
             try {
                 if (userRole === 'doctor') {
                     const [sharedRes, patientsRes] = await Promise.all([
-                        axios.get('http://localhost:5000/api/reports/shared', config),
-                        axios.get('http://localhost:5000/api/friends/list', config),
+                        axios.get(`${API_BASE}/api/reports/shared`, config),
+                        axios.get(`${API_BASE}/api/friends/list`, config),
                     ]);
                     setSharedReports(sharedRes.data);
                     setConnectedPatients(patientsRes.data);
                 } else {
                     const [vitalsRes, reportsRes, friendsRes] = await Promise.all([
-                        axios.get('http://localhost:5000/api/vitals', config),
-                        axios.get('http://localhost:5000/api/reports', config),
-                        axios.get('http://localhost:5000/api/friends/list', config).catch(() => ({ data: [] })),
+                        axios.get(`${API_BASE}/api/vitals`, config),
+                        axios.get(`${API_BASE}/api/reports`, config),
+                        axios.get(`${API_BASE}/api/friends/list`, config).catch(() => ({ data: [] })),
                     ]);
                     setVitals(vitalsRes.data);
                     setReports(reportsRes.data);

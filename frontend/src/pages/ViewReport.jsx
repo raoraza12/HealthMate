@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -41,7 +42,7 @@ const ViewReport = () => {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/reports/${id}`, { headers: { 'x-auth-token': token } });
+                const res = await axios.get(`${API_BASE}/api/reports/${id}`, { headers: { 'x-auth-token': token } });
                 setReport(res.data);
             } catch (err) {
                 toast.error('Report nahi mili.');
@@ -55,7 +56,7 @@ const ViewReport = () => {
         if (!window.confirm('Kya aap is report ko hamesha ke liye delete karna chahte hain?')) return;
         setDeleting(true);
         try {
-            await axios.delete(`http://localhost:5000/api/reports/${id}`, { headers: { 'x-auth-token': token } });
+            await axios.delete(`${API_BASE}/api/reports/${id}`, { headers: { 'x-auth-token': token } });
             toast.success('Report delete ho gayi.');
             navigate('/dashboard');
         } catch (err) {

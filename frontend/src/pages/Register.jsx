@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -27,7 +28,7 @@ const Register = () => {
                 bio: role === 'doctor' ? form.bio : '',
                 phone: role === 'doctor' ? form.phone : '',
             };
-            const res = await axios.post('http://localhost:5000/api/auth/register', payload);
+            const res = await axios.post(`${API_BASE}/api/auth/register`, payload);
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userId', res.data.user.id);
             localStorage.setItem('userName', res.data.user.name);

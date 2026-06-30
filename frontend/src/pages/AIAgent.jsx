@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -40,7 +41,7 @@ const AIAgent = () => {
 
         try {
             // Send user message and chat history to backend
-            const res = await axios.post('http://localhost:5000/api/ai-agent/chat', {
+            const res = await axios.post(`${API_BASE}/api/ai-agent/chat`, {
                 message: msgToSend,
                 history: messages
             }, axiosConfig);

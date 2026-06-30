@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -23,7 +24,7 @@ const Sidebar = () => {
         const token = localStorage.getItem('token');
         if (!token) return;
         try {
-            const res = await axios.get('http://localhost:5000/api/messages/unread-count', {
+            const res = await axios.get(`${API_BASE}/api/messages/unread-count`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUnreadCount(res.data.count);

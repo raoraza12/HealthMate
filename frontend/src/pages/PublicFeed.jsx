@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -18,7 +19,7 @@ const PublicFeed = () => {
     useEffect(() => {
         const fetchFeed = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/reports/public/feed', axiosConfig);
+                const res = await axios.get(`${API_BASE}/api/reports/public/feed`, axiosConfig);
                 setReports(res.data);
             } catch (err) {
                 console.error('Error fetching public reports feed:', err);

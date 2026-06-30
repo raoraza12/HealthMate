@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -35,7 +36,7 @@ const UploadReport = () => {
         formData.append('isPublic', isPublic);
         try {
             setStage('analyzing');
-            const res = await axios.post('http://localhost:5000/api/reports/upload', formData, {
+            const res = await axios.post(`${API_BASE}/api/reports/upload`, formData, {
                 headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' },
             });
             setStage('done');

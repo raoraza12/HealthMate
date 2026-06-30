@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -173,7 +174,7 @@ const Profile = () => {
 
     const fetchDashboard = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/dashboard-stats', axiosConfig);
+            const res = await axios.get(`${API_BASE}/api/dashboard-stats`, axiosConfig);
             setData(res.data);
             setForm({
                 specialty: res.data.user.specialty || '',
@@ -208,7 +209,7 @@ const Profile = () => {
         formData.append('avatar', file);
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/avatar', formData, {
+            const res = await axios.post(`${API_BASE}/api/auth/avatar`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
@@ -229,7 +230,7 @@ const Profile = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            const res = await axios.put('http://localhost:5000/api/auth/profile', form, axiosConfig);
+            const res = await axios.put(`${API_BASE}/api/auth/profile`, form, axiosConfig);
             localStorage.setItem('userName', res.data.name);
             localStorage.setItem('userGender', res.data.gender || 'male');
             localStorage.setItem('userAvatar', res.data.avatar || '');

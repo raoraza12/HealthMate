@@ -1,3 +1,4 @@
+import API_BASE from '../config/api';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -92,7 +93,7 @@ const Timeline = () => {
     useEffect(() => {
         const fetchTimeline = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/timeline', { headers: { 'x-auth-token': token } });
+                const res = await axios.get(`${API_BASE}/api/timeline`, { headers: { 'x-auth-token': token } });
                 setEntries(res.data);
             } catch (err) { console.error(err); }
             finally { setLoading(false); }
