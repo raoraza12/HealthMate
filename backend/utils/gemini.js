@@ -26,8 +26,8 @@ const analyzeReport = async (fileBuffer, mimeType) => {
 
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        // Using gemini-1.5-flash as it is fast and has a free tier
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Using gemini-2.5-flash as it is fast and has a free tier
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const fileData = {
             inlineData: {
