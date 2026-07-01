@@ -49,15 +49,20 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB then start server
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/healthmate')
     .then(() => {
         console.log('✅ Connected to MongoDB');
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on port ${PORT}`);
-        });
     })
     .catch((err) => {
         console.error('❌ MongoDB connection failed:', err.message);
-        process.exit(1);
     });
+
+// Only listen when running locally, not on Vercel
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running locally on port ${PORT}`);
+    });
+}
+
+module.exports = app;
