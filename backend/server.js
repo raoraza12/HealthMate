@@ -7,6 +7,14 @@ const path = require('path');
 // Load environment variables
 dotenv.config();
 
+// JWT_SECRET is required: without it, auth tokens would be signed with a
+// publicly known fallback, so anyone could forge tokens. Fail fast instead
+// of starting insecurely. See backend/.env.example.
+if (!process.env.JWT_SECRET) {
+    console.error('FATAL: JWT_SECRET is not set. Copy backend/.env.example to backend/.env and set a long random value.');
+    process.exit(1);
+}
+
 const app = express();
 
 // CORS — allow frontend Vercel domain + localhost

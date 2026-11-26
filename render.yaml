@@ -1,0 +1,33 @@
+# Render Blueprint for the HealthMate backend
+# Deploy: Render dashboard > New > Blueprint, then select this repo.
+# Secrets (MONGO_URI, JWT_SECRET, GEMINI_API_KEY, CLOUDINARY_*) are set
+# in the Render dashboard (sync: false) and are never committed here.
+# NOTE: Render currently requires payment info on the account before any
+# service can be created (dashboard.render.com/billing).
+services:
+  - type: web
+    name: healthmate-backend
+    env: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        value: https://healthmate-frontend-five.vercel.app
